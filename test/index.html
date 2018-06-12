@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Pinchpan JavaScript Library Suite</title>
+    <link rel='stylesheet' href='style.css'>
+  </head>
+  <body>
+    <h1>Pinchpan JavaScript Library Suite</h1>
+    <p>A suite of libraries to work with pinch, pan, and tap actions on mobile devices.</p>
+
+    <h2>Downloads</h2>
+    <li><a href='../src/pinchpan.js'>Pinchpan</a> - detect pinch, pan, and tap actions
+      on mobile devices. Requires <a href='https://jquery.com'>jQuery</a>.</li>
+    <li><a href='../src/zoomable.js'>Zoomable</a> - for zooming and panning HTML
+      elements. Requires Pinchpan.</li>
+    <p>Distributed under the <a href='../LICENSE'>Apache License 2.0</a></p>
+
+    <h2>Example</h2>
+    <div id='log'>The event handler outputs log here.</div>
+    <div id='viewport'>
+      <img id='myImage' src='test-image.jpg' style='width:12758;height:10411px' />
+    </div>
+    <script src='https://code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=' crossorigin='anonymous'></script>
+    <script src='../src/pinchpan.js'></script>
+    <script src='../src/zoomable.js'></script>
+    <script>
+      /* Handle zoom event */
+      $('#myImage').zoomable(function(e) {
+        var w = Math.round($(this).width(), 0);
+        var h = Math.round($(this).height(), 0);
+
+        $('#log').html(`Last action: Zoom to ${w} x ${h} / Pan`);
+      });
+
+      /* Handle tap event */
+      $('#myImage').tappable(function(e) {
+        var xp = Math.round(e.click.imgX * 100, 2);
+        var yp = Math.round(e.click.imgY * 100, 2);
+
+        $('#log').html(`Last action: Tap/Click at ${xp}%, ${yp}%`);
+      });
+
+      /*
+      * Position of the image on initial load. The calculation can kick off
+      * immediately without waiting for the image to load fully because the img
+      * tag specifies the image size.
+      */
+      (function() {
+        const pw = $('#myImage').parent().width();
+        const ph = $('#myImage').parent().height();
+        const w = $('#myImage').width();
+        const h = $('#myImage').height();
+        const offset = $('#myImage').offset();
+
+        // Fully fill the viewport without distorting the aspect ratio.
+        if(w / pw < h / ph) {
+          $('#myImage').width(pw);
+          $('#myImage').height(h * pw / w);
+        }
+        else {
+          $('#myImage').width(w * ph / h);
+          $('#myImage').height(ph);
+        }
+
+        // Center the image
+        offset.left -= ($('#myImage').width() - pw) * 1/2;
+        offset.top -= ($('#myImage').height() - ph) * 1/2;
+        $('#myImage').offset(offset);
+      })();
+    </script>
+  </body>
+</html>
