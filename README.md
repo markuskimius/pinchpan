@@ -1,6 +1,8 @@
-# Pinchpan JavaScript Library Suite
+# Pinchpan JavaScript Libraries
 
-A suite of libraries to detect pinch, swipe, and tap events on mobile devices. They also work with scroll, click-drag, and click events for compatibility with desktop devices.
+JavaScript libraries to detect pinch, swipe, and tap events on mobile devices,
+and scroll, click-drag, and click events on desktop devices.  Used on
+[subwayhere.com].
 
 ## Modules
 
@@ -48,10 +50,11 @@ zoomable.js provides the following methods:
 
 ## Example
 
-See [test/index.html] for an example.
+See [test/index.html] for an example and [subwayhere.com] for a real-life usage.
 
   [jQuery]: https://jquery.com/
   [src/pinchpan.js]: src/pinchpan.js
   [src/zoomable.js]: src/zoomable.js
   [test/index.html]: test/index.html
+  [subwayhere.com]: https://subwayhere.com/picker2.html
 
